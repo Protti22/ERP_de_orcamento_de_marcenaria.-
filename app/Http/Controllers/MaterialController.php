@@ -12,16 +12,15 @@ class MaterialController extends Controller
      */
     public function index()
     {
-        //
+        $materials = Material::query()
+            ->when($request->type, fn($q, $type) => $q->where('type', $type))
+            ->when($request->search, fn($q, $search) => $q->where('name', 'like', "%{$search}%"))
+            ->orderBy('name')
+            ->paginate(15);
+
+        return response()->json($materials);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -42,10 +41,7 @@ class MaterialController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Material $material)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.

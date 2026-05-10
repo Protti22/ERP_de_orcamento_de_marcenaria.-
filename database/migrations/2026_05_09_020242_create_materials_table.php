@@ -13,6 +13,23 @@ return new class extends Migration
     {
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->enum('type', [
+                'mdf',
+                'hardware',
+                'edge_tape',
+                'accessory',
+                'other'
+            ]);
+
+            $table->decimal('price', 10, 2);
+
+            $table->string('unit');
+            // m2, unidade, metro, par etc
+
+            $table->decimal('width', 10, 2)->nullable();
+            $table->decimal('height', 10, 2)->nullable();
+            $table->decimal('thickness', 10, 2)->nullable();
             $table->timestamps();
         });
     }
